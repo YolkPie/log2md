@@ -28,7 +28,7 @@ npm install log2md -D
 ``` js
 // package.json
 
-"log2md": "log2md dev",
+"log2md": "log2md run",
 ```
 
 - 参数配置
@@ -44,7 +44,7 @@ npm install log2md -D
 ``` js
 // package.json
 
-"log2md": "log2md dev --week 1 --sort 1",
+"log2md": "log2md run --week 1 --sort 1",
 ```
 
 > 命令执行后，自动生成.log2mdrc.json 文件
