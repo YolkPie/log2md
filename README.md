@@ -104,7 +104,12 @@ npm install log2md -D
 ```
 - bookMark 字段为 type映射名称
 
-> <type>(<scope>): <subject> 中的type为 feat 映射为 新功能， 可手动修改或添加
+**示例**
+``` js
+
+<type>(<scope>): <subject> 中的type为 feat 映射为 新功能， 可手动修改或添加
+```
+
 
 - sort 字段为布尔值 控制是否排序
 
