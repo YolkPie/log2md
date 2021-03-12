@@ -2,9 +2,12 @@
 
 **功能描述：**
 
-> 抓取git元数据，输出commit信息文档，支持作者筛选、周纬度筛选，亦可自行配置开始、结束时间。
-> 支持分类排序，前置条件为符合angular规范的commit message
+> 抓取git元数据，输出commit信息文档，支持作者筛选、以周纬度筛选，亦可自行配置开始、结束时间。
 
+> 支持分类排序，前置条件为**符合angular规范的commit message**
+
+
+**commit message 格式示例**
 ``` js
 <type>(<scope>): <subject>
 
@@ -27,50 +30,116 @@ npm install log2md -D
 - 配置命令
 ``` js
 // package.json
-
-"log2md": "log2md run",
+"scripts": {
+    "log2md": "log2md run",
+}
 ```
 
 - 参数配置
 
 命令行参数：
-1. --after  开始时间
-2. --before 结束时间
-3. --week 周 支持 0 -> 上周 1 -> 本周 默认值为1
-4. --author 作者
-5. --sort 是否排序 支持 0 -> 不排序 1 -> 排序 默认值为1
+1. --after <after>  筛选开始时间，检出此开始时间之后的日志
 
 **示例**
 ``` js
 // package.json
 
-"log2md": "log2md run --week 1 --sort 1",
+"log2md": "log2md run --after 2020-02-02",
 ```
 
-> 命令执行后，自动生成.log2mdrc.json 文件
+2. --before <before> 筛选结束时间，检出此结束时间之前的日志
 
+
+**示例**
+``` js
+// package.json
+
+"log2md": "log2md run --before 2020-02-02",
+```
+
+3. --week <week> 按周纬度筛选 默认值为1,筛选本周 亦可传0，筛选上一周
+
+
+**示例**
+``` js
+// package.json
+
+"log2md": "log2md run --week 0",
+```
+
+4. --author <author> 按作者筛选，检出此作者的日志
+**示例**
+``` js
+// package.json
+
+"log2md": "log2md run --author yyy",
+```
+
+5. --sort <sort> 是否排序  默认值为1,自动排序 亦可传0，不排序
+
+**示例**
+``` js
+// package.json
+
+"log2md": "log2md run --sort 0",
+```
+
+> 命令执行后，自动生成[.log2mdrc.json] 文件，以及[LOG2MD.md] 文件
+
+**.log2mdrc.json**文件说明
+
+``` json
+{
+    "bookMark": {
+        "fix": "修复BUG",
+        "fixbug": "修复BUG",
+        "feat": "新功能",
+        "chore": "打包构建",
+        "chroe": "打包构建",
+        "style": "样式构建",
+        "docs": "补充文档"
+    },
+    "sort": true
+}
+```
 - bookMark 字段为 type映射名称
+
+> <type>(<scope>): <subject> 中的type为 feat 映射为 新功能， 可手动修改或添加
+
 - sort 字段为布尔值 控制是否排序
 
+**LOG2MD.md**文件说明
 
-输出文档格式
+- sort为true输出文档格式
 ``` 
 其他:
-feat添加git分支管理策略
-
- code:
-补充文档: 重构-22种坏味道
+feat增加目录
 
  log:
 新功能: 支持参数配置
 
  index:
-新功能: 添加了log2md插件源码
 补充文档: 文档整理
-新功能: 增加目录
 补充文档: 文档新增
 新功能: 完成基础骨架搭建
 
  all:
 补充文档: 文档搭建
+```
+
+> 符合commit message格式的提交会按照scope进行分类，同时根据配置对type进行映射
+不符合commit message格式的提交汇总到其他
+
+
+- sort为false的输出文档格式
+
+```
+log2md版本迭代
+支持参数配置
+添加了log2md插件源码
+文档整理
+增加目录
+feat增加目录
+文档新增
+完成基础骨架搭建
 ```
